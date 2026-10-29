@@ -173,28 +173,53 @@
         - EndymionStatueLarge1
 
 - type: entity
-  parent: [BaseFlatpack, BaseSecurityContraband]
-  id: WashingMachineSecurityFlatpack
-  name: security washing machine flatpack
-  description: A flatpack used for constructing a security washing machine.
+  parent: [ BaseStructureFlatpack, BaseEngineeringContraband ]
+  id: CombustionTurbineCompressorFlatpack
+  name: inlet compressor flatpack
+  description: A flatpack used for constructing the inlet compressor of a combustion turbine, with a tier 1 compressor part installed.
   components:
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: large
   - type: Flatpack
-    entity: WashingMachineSecurity
+    entity: CombustionTurbineCompressorFilled
 
 - type: entity
-  parent: [BaseFlatpack, BaseCommandContraband]
-  id: WashingMachineCommandFlatpack
-  name: command washing machine flatpack
-  description: A flatpack used for constructing a command washing machine.
+  parent: [ BaseStructureFlatpack, BaseEngineeringContraband ]
+  id: CombustionTurbineRotorFlatpack
+  name: core rotor flatpack
+  description: A flatpack used for constructing the core rotor of a combustion turbine, with a tier 1 rotor part installed.
   components:
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: large
   - type: Flatpack
-    entity: WashingMachineCommand
+    entity: CombustionTurbineRotorFilled
 
 - type: entity
-  parent: [BaseFlatpack, BaseMedicalContraband]
-  id: WashingMachineMedicalFlatpack
-  name: medical washing machine flatpack
-  description: A flatpack used for constructing a medical washing machine.
+  parent: [ BaseStructureFlatpack, BaseEngineeringContraband ]
+  id: CombustionTurbineOutletFlatpack
+  name: turbine outlet flatpack
+  description: A flatpack used for constructing the outlet of a combustion turbine, with a tier 1 stator part installed.
   components:
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: large
   - type: Flatpack
-    entity: WashingMachineMedical
+    entity: CombustionTurbineOutletFilled
+
+- type: entity
+  parent: [ BaseStructureFlatpack, BaseEngineeringContraband ]
+  id: ComputerCombustionTurbineFlatpack
+  name: combustion turbine control computer flatpack
+  description: A flatpack used for constructing a combustion turbine control computer.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/flatpack.rsi
+    layers:
+    - state: large
+  - type: Flatpack
+    entity: ComputerCombustionTurbine

@@ -16,32 +16,26 @@ public abstract partial class SharedIgnitionSourceSystem : EntitySystem
         SubscribeLocalEvent<IgnitionSourceComponent, IsHotEvent>(OnIsHot);
         SubscribeLocalEvent<ItemToggleHotComponent, ItemToggledEvent>(OnItemToggle);
         SubscribeLocalEvent<IgnitionSourceComponent, IgnitionEvent>(OnIgnitionEvent);
+        InitializeMolotovIgnition(); // Starlight-edit: predict hot-item ignition.
     }
 
-    private void OnIsHot(Entity<IgnitionSourceComponent> ent, ref IsHotEvent args)
-    {
-        args.IsHot |= ent.Comp.Ignited;
-    }
+    private void OnIsHot(Entity<IgnitionSourceComponent> ent, ref IsHotEvent args) => args.IsHot |= ent.Comp.Ignited;
 
-    private void OnItemToggle(Entity<ItemToggleHotComponent> ent, ref ItemToggledEvent args)
-    {
-        SetIgnited(ent.Owner, args.Activated);
-    }
+    private void OnItemToggle(Entity<ItemToggleHotComponent> ent, ref ItemToggledEvent args) => SetIgnited(ent.Owner, args.Activated);
 
-    private void OnIgnitionEvent(Entity<IgnitionSourceComponent> ent, ref IgnitionEvent args)
-    {
-        SetIgnited((ent.Owner, ent.Comp), args.Ignite);
-    }
+    private void OnIgnitionEvent(Entity<IgnitionSourceComponent> ent, ref IgnitionEvent args) => SetIgnited((ent.Owner, ent.Comp), args.Ignite);
 
     /// <summary>
     /// Simply sets the ignited field to the ignited param.
     /// </summary>
     public void SetIgnited(Entity<IgnitionSourceComponent?> ent, bool ignited = true)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        // Starlight - burning entities re-ignite every second, don't dirty when nothing changes.
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Ignited == ignited)
             return;
 
         ent.Comp.Ignited = ignited;
         Dirty(ent, ent.Comp);
+        OnIgnitionStateChanged((ent.Owner, ent.Comp)); // Starlight
     }
 }
